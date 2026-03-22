@@ -1,0 +1,38 @@
+name: Deploy Azure Function
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        run: dotnet restore CpfValidator.sln
+
+      - name: Build
+        run: dotnet build CpfValidator.sln --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test CpfValidator.sln --configuration Release --no-build
+
+      - name: Publish
+        run: dotnet publish src/CpfValidator.Functions/CpfValidator.Functions.csproj --configuration Release --output publish_output
+
+      - name: Deploy
+        uses: Azure/functions-action@v1
+        with:
+          app-name: ${{ secrets.AZURE_FUNCTIONAPP_NAME }}
+          package: ./publish_output
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
