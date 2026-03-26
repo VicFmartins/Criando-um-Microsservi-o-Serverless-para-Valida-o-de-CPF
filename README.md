@@ -144,7 +144,7 @@ Responsável por:
 
 ### GitHub Actions
 
-O workflow em [deploy.yml](C:/Users/vitor/OneDrive/Documentos/Playground/repo-cpf-serverless/.github/workflows/deploy.yml) já faz:
+O workflow em [deploy.yml](.github/workflows/deploy.yml) já faz:
 
 1. restore;
 2. build;
@@ -159,7 +159,7 @@ Secrets esperados:
 
 ### Infraestrutura com Bicep
 
-O arquivo [main.bicep](C:/Users/vitor/OneDrive/Documentos/Playground/repo-cpf-serverless/infra/main.bicep) provisiona:
+O arquivo [main.bicep](infra/main.bicep) provisiona:
 
 - Storage Account
 - Consumption Plan
